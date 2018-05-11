@@ -14,7 +14,7 @@ var detectNetwork = function(cardNumber) {
   var prefix = cardNumber.split('').slice(0,2).join('');
   var threeDigitPrefix = cardNumber.split('').slice(0,3).join('');
   var fourDigitPrefix = cardNumber.split('').slice(0,4).join('');
-  console.log(prefix[0])
+  var sixDigitPrefix = cardNumber.split('').slice(0,6).join('');
 
   if ((prefix === '38' || prefix === '39') && cardNumber.length === 14){
   	return 'Diner\'s Club'
@@ -22,6 +22,11 @@ var detectNetwork = function(cardNumber) {
   if ((prefix === '34' || prefix === '37') && cardNumber.length === 15){
   	return "American Express";
   }
+  if ((fourDigitPrefix === "4903" || fourDigitPrefix === "4905" || fourDigitPrefix === "4911" || fourDigitPrefix === "4936" ||
+  	 sixDigitPrefix === "564182" || sixDigitPrefix === "633110" || fourDigitPrefix === "6333" || fourDigitPrefix === "6759") &&
+  	 (cardNumber.length=== 16 || cardNumber.length === 18 || cardNumber.length === 19)) {
+  	return "Switch";
+  }  
   if ((prefix[0] === '4') && (cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19)){
   	return 'Visa';
   }
@@ -34,8 +39,13 @@ var detectNetwork = function(cardNumber) {
   if ((fourDigitPrefix === '5018' || fourDigitPrefix === '5020' || fourDigitPrefix === '5038' || fourDigitPrefix === '6304') && (cardNumber.length >=12 && cardNumber.length <= 19)){
   	return 'Maestro';
   }
+  if (((parseInt(sixDigitPrefix) >= 622126 && parseInt(sixDigitPrefix) <= 622925) || 
+  	(parseInt(threeDigitPrefix) >= 624 && parseInt(threeDigitPrefix) <= 626) || 
+  	(parseInt(fourDigitPrefix) >= 6282 && parseInt(fourDigitPrefix) <= 6288)) && (cardNumber.length >= 16 && cardNumber.length<= 19)) {
+  	return "China UnionPay";
+  }
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 };
 
 
-console.log(detectNetwork('5212345678901234'));
+console.log(detectNetwork('38345678901234'));
